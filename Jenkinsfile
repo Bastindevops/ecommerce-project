@@ -10,18 +10,21 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build Order Service') {
             steps {
-                sh 'mvn clean package'
+                dir('order-service') {
+                    sh 'mvn clean package'
+                }
             }
         }
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t order-service:v1 .'
+                dir('order-service') {
+                    sh 'docker build -t order-service:v1 .'
+                }
             }
         }
 
     }
-
 }
