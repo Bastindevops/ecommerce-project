@@ -9,10 +9,10 @@ pipeline {
             }
         }
 
-       stage('Build') {
+      stage('Docker Build') {
     steps {
         dir('order-service') {
-            bat 'mvn clean package'
+            bat 'docker build -t devop93/order-service:v1 .'
         }
     }
 }
