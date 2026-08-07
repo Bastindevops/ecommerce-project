@@ -12,7 +12,7 @@ pipeline {
        stage('Build') {
     steps {
         dir('order-service') {
-            bat 'mvn clean package'
+            sh 'mvn clean package'
         }
     }
 }
@@ -20,7 +20,7 @@ pipeline {
 stage('Docker Build') {
     steps {
         dir('order-service') {
-            bat 'docker build -t yourdockerhubusername/order-service:v1 .'
+            sh 'docker build -t yourdockerhubusername/order-service:v1 .'
         }
     }
 }
@@ -32,14 +32,14 @@ stage('Docker Build') {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-                    bat 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                    sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
                 }
             }
         }
 
         stage('Docker Push') {
             steps {
-                bat 'docker push yourdockerhubusername/order-service:v1'
+                sh 'docker push yourdockerhubusername/order-service:v1'
             }
         }
     }
