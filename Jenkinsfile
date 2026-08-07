@@ -9,21 +9,21 @@ pipeline {
             }
         }
 
-      stage('Docker Build') {
-    steps {
-        dir('order-service') {
-            bat 'docker build -t devop93/order-service:v1 .'
+        stage('Build') {
+            steps {
+                dir('order-service') {
+                    bat 'mvn clean package'
+                }
+            }
         }
-    }
-}
 
-stage('Docker Build') {
-    steps {
-        dir('order-service') {
-            bat 'docker build -t yourdockerhubusername/order-service:v1 .'
+        stage('Docker Build') {
+            steps {
+                dir('order-service') {
+                    bat 'docker build -t devop93/order-service:v1 .'
+                }
+            }
         }
-    }
-}
 
         stage('Docker Login') {
             steps {
